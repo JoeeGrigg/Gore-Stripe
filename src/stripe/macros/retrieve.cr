@@ -3,7 +3,7 @@ module StripeMethods
 
   macro add_retrieve_method
 {% begin %}
-  def self.retrieve(client : Stripe::Client, id : String)
+  def self.retrieve(client : Stripe::Client, id : String) : {{@type.id}}
     response = client.http_client.get("/v1/#{"{{@type.id.gsub(/Stripe::/, "").underscore.gsub(/::/, "/")}}"}s/#{id}")
 
     if response.status_code == 200
