@@ -33,6 +33,7 @@ class Stripe::Product
   getter unit_label : String?
 
   def self.create(
+    client : Stripe::Client,
     name : String,
     active : Bool? = nil,
     description : String? = nil,
@@ -49,7 +50,7 @@ class Stripe::Product
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
-    response = Stripe.client.post("/v1/products", form: io.to_s)
+    response = client.http_client.post("/v1/products", form: io.to_s)
 
     if response.status_code == 200
       Product.from_json(response.body)
