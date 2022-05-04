@@ -13,6 +13,7 @@ class Stripe::Product
     ending_before : String? = nil
   )
   add_retrieve_method
+  add_search_method
 
   getter id : String
 
