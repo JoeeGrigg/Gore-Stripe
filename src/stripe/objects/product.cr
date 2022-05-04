@@ -12,6 +12,7 @@ class Stripe::Product
     starting_after : String? = nil,
     ending_before : String? = nil
   )
+  add_retrieve_method
 
   getter id : String
 
