@@ -35,6 +35,7 @@ class Stripe::CheckoutSession
 
   getter cancel_url : String
   getter success_url : String
+  getter url : String
 
   getter client_reference_id : String?
   getter customer : String? | Stripe::Customer?
