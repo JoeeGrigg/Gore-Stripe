@@ -9,12 +9,6 @@ class Stripe::CheckoutSession
     ending_before : String? = nil
   )
 
-  enum Mode
-    Payment
-    Setup
-    Subscription
-  end
-
   enum PaymentStatus
     Paid
     Unpaid
@@ -36,8 +30,7 @@ class Stripe::CheckoutSession
   getter id : String
   getter object : String? = "checkout.session"
 
-  @[JSON::Field(converter: Enum::StringConverter(Stripe::CheckoutSession::Mode))]
-  getter mode : String | Mode
+  getter mode : String
   getter payment_method_types : Array(String)
 
   getter cancel_url : String
@@ -75,7 +68,7 @@ class Stripe::CheckoutSession
 
   def self.create(
     client : Stripe::Client,
-    mode : String | Stripe::CheckoutSession::Mode,
+    mode : String,
     cancel_url : String,
     success_url : String,
     payment_method_types : Array(String)? = nil,
