@@ -74,10 +74,11 @@ class Stripe::CheckoutSession
   getter submit_type : SubmitType?
 
   def self.create(
+    client : Stripe::Client,
     mode : String | Stripe::CheckoutSession::Mode,
-    payment_method_types : Array(String),
     cancel_url : String,
     success_url : String,
+    payment_method_types : Array(String)? = nil,
     client_reference_id : String? = nil,
     customer : String? | Stripe::Customer? = nil,
     customer_email : String? = nil,
@@ -97,7 +98,7 @@ class Stripe::CheckoutSession
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
-    response = Stripe.client.post("/v1/checkout/sessions", form: io.to_s)
+    response = client.http_client.post("/v1/checkout/sessions", form: io.to_s)
 
     if response.status_code == 200
       Stripe::CheckoutSession.from_json(response.body)
