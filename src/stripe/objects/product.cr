@@ -20,7 +20,7 @@ class Stripe::Product
   getter name : String
   getter active : Bool
   getter description : String?
-  getter metadata : Hash(String, String)?
+  getter metadata : Hash(String, String)
 
   @[JSON::Field(converter: Time::EpochConverter)]
   getter created : Time
