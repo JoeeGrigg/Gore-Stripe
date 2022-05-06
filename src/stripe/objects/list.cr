@@ -6,6 +6,7 @@ class Stripe::List(T)
   getter has_more : Bool
   getter total_count : Int32?
   getter url : String
+  getter next_page : String?
 
   def each(&block)
     data.each do |i|
