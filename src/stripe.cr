@@ -1,5 +1,6 @@
 require "json"
 require "http/client"
+require "money"
 require "./ext/**"
 
 class Stripe::Client

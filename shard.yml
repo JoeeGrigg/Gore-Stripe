@@ -1,6 +1,6 @@
 name: stripe
 description: A Stripe API wrapper specifically for use in the Gore project
-version: 0.0.12
+version: 0.0.13
 
 license: MIT
 
@@ -8,3 +8,7 @@ authors:
   - Joe Grigg
 
 crystal: ">= 0.36.1, < 2.0.0"
+
+dependencies:
+  money:
+    github: crystal-money/money

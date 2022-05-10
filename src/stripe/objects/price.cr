@@ -30,4 +30,13 @@ class Stripe::Price
   getter created : Time
   getter livemode : Bool
   getter unit_amount_decimal : String?
+
+  def money_amount : Money?
+    return nil unless unit_amount && currency
+    Money.new(unit_amount.not_nil!, currency.not_nil!)
+  end
+
+  def formatted_unit_amount : String
+    money_amount ? money_amount.not_nil!.format : ""
+  end
 end
