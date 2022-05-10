@@ -52,7 +52,7 @@ class Stripe::Price
     io = IO::Memory.new
     builder = ParamsBuilder.new(io)
 
-    {% for x in %w(name active description metadata images statement_descriptor unit_label) %}
+    {% for x in %w(product currency unit_amount active metadata nickname) %}
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
@@ -77,7 +77,7 @@ class Stripe::Price
     io = IO::Memory.new
     builder = ParamsBuilder.new(io)
 
-    {% for x in %w(name active description metadata images statement_descriptor unit_label) %}
+    {% for x in %w(currency unit_amount active metadata nickname) %}
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
