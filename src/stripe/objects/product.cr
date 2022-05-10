@@ -21,6 +21,7 @@ class Stripe::Product
   getter active : Bool
   getter description : String?
   getter metadata : Hash(String, String)
+  getter default_price : String?
 
   @[JSON::Field(converter: Time::EpochConverter)]
   getter created : Time
@@ -70,12 +71,13 @@ class Stripe::Product
     images : Array(String)? = nil,
     statement_descriptor : String? = nil,
     unit_label : String? = nil,
-    type : String? = nil
+    type : String? = nil,
+    default_price : String? = nil
   ) : Product forall T, U
     io = IO::Memory.new
     builder = ParamsBuilder.new(io)
 
-    {% for x in %w(name active description metadata images statement_descriptor unit_label) %}
+    {% for x in %w(name active description metadata images statement_descriptor unit_label default_price) %}
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
