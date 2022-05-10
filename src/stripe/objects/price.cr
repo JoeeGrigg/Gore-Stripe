@@ -39,4 +39,54 @@ class Stripe::Price
   def formatted_unit_amount : String
     money_amount ? money_amount.not_nil!.format : ""
   end
+
+  def self.create(
+    client : Stripe::Client,
+    product : String,
+    currency : String,
+    unit_amount : Int32,
+    active : Bool? = nil,
+    metadata : Hash? = nil,
+    nickname : String? = nil
+  ) : Price forall T, U
+    io = IO::Memory.new
+    builder = ParamsBuilder.new(io)
+
+    {% for x in %w(name active description metadata images statement_descriptor unit_label) %}
+      builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
+    {% end %}
+
+    response = client.http_client.post("/v1/prices", form: io.to_s)
+
+    if response.status_code == 200
+      Price.from_json(response.body)
+    else
+      raise Error.from_json(response.body, "error")
+    end
+  end
+
+  def self.update(
+    client : Stripe::Client,
+    id : String,
+    currency : String? = nil,
+    unit_amount : Int32? = nil,
+    active : Bool? = nil,
+    metadata : Hash? = nil,
+    nickname : String? = nil
+  ) : Price forall T, U
+    io = IO::Memory.new
+    builder = ParamsBuilder.new(io)
+
+    {% for x in %w(name active description metadata images statement_descriptor unit_label) %}
+      builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
+    {% end %}
+
+    response = client.http_client.post("/v1/prices/#{id}", form: io.to_s)
+
+    if response.status_code == 200
+      Price.from_json(response.body)
+    else
+      raise Error.from_json(response.body, "error")
+    end
+  end
 end
