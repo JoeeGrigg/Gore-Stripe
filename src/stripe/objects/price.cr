@@ -14,6 +14,7 @@ class Stripe::Price
     starting_after : String? = nil,
     ending_before : String? = nil
   )
+  add_all_method({active: [true, false]})
   add_retrieve_method
   add_search_method
 
